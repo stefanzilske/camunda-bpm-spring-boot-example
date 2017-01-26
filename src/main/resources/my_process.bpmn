@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.5.1">
+  <bpmn:process id="process_myFirstProcess" name="end_event_my_process_invalid" isExecutable="true">
+    <bpmn:endEvent id="end_event_my_process_invalid" name="end_event_my_process_invalid">
+      <bpmn:incoming>SequenceFlow_0yl4mdt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="service_task_do_something" name="Do Something" camunda:delegateExpression="#{doSomethingDelegate}">
+      <bpmn:incoming>SequenceFlow_06cwykk</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_13mcwli</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="start_event_my_process" name="start_event_my_process">
+      <bpmn:outgoing>SequenceFlow_06cwykk</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_06cwykk" sourceRef="start_event_my_process" targetRef="service_task_do_something" />
+    <bpmn:sequenceFlow id="SequenceFlow_13mcwli" sourceRef="service_task_do_something" targetRef="gateway_result_valid" />
+    <bpmn:exclusiveGateway id="gateway_result_valid" name="Result valid?">
+      <bpmn:incoming>SequenceFlow_13mcwli</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0yl4mdt</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0rmjppy</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0yl4mdt" sourceRef="gateway_result_valid" targetRef="end_event_my_process_invalid">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${valid == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="end_event_my_process_valid">
+      <bpmn:incoming>SequenceFlow_0rmjppy</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0rmjppy" sourceRef="gateway_result_valid" targetRef="end_event_my_process_valid">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${valid == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_myFirstProcess">
+      <bpmndi:BPMNShape id="EndEvent_1jcfjpl_di" bpmnElement="end_event_my_process_invalid">
+        <dc:Bounds x="703" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="676" y="138" width="89" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_04ughn0_di" bpmnElement="service_task_do_something">
+        <dc:Bounds x="262" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start_event_my_process">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="147" y="138" width="88" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_06cwykk_di" bpmnElement="SequenceFlow_06cwykk">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="262" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="236" y="105" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_13mcwli_di" bpmnElement="SequenceFlow_13mcwli">
+        <di:waypoint xsi:type="dc:Point" x="362" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="428" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="395" y="105" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1v2ygsh_di" bpmnElement="gateway_result_valid" isMarkerVisible="true">
+        <dc:Bounds x="427.9137055837563" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="421" y="71" width="63" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0yl4mdt_di" bpmnElement="SequenceFlow_0yl4mdt">
+        <di:waypoint xsi:type="dc:Point" x="478" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="703" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="591" y="95" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0e1vz5s_di" bpmnElement="end_event_my_process_valid">
+        <dc:Bounds x="703" y="234.42131979695432" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="721" y="270.4213197969543" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0rmjppy_di" bpmnElement="SequenceFlow_0rmjppy">
+        <di:waypoint xsi:type="dc:Point" x="453" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="453" y="252" />
+        <di:waypoint xsi:type="dc:Point" x="703" y="252" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="468" y="188.5" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
